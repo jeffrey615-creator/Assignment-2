@@ -12,6 +12,7 @@ import {
 import Header from "./Header";
 import { useState } from "react";
 import ActivitesList from "./ActivitiesList";
+import Input from "./Input";
 
 export default function AllActivities({navigation}) {
     const appName = "My awesome app";
@@ -49,7 +50,7 @@ export default function AllActivities({navigation}) {
           <View style={styles.bottomView}>
             <FlatList
               contentContainerStyle={styles.scrollViewContent}
-              data={goals}
+              data={activities}
               renderItem={({ item }) => {
                 return (
                   <ActivitesList activityObj={item} />

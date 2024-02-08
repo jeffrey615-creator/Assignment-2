@@ -1,11 +1,11 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default function GoalItem({ goalObj}) {
+export default function ActivitesList({ activityObj}) {
 
   return (
     <View style={styles.textContainer}>
-      <Text style={styles.text}>{goalObj.text}</Text>
+      <Text style={styles.text}>{activityObj.text}</Text>
     </View>
   );
 }
