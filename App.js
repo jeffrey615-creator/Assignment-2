@@ -1,40 +1,25 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Header from './components/Header';
-import Start from './components/Start'; // Make sure the path is correct
+import Start from './components/Start'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AllActivities from './components/AllActivities';
+import SpecialActivities from './components/SpecialActivities';
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const appName = "My awesome app";
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  
-  // Updated to handle both email and phone number input
-  function receiveInput(emailInput, phoneNumberInput) {
-    console.log("Received email:", emailInput, "and phone number:", phoneNumberInput);
-    setEmail(emailInput);
-    setPhoneNumber(phoneNumberInput);
-    setIsModalVisible(false);
-  }
-  
-  function dismissModal() {
-    setIsModalVisible(false);
-  }
-
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Header name={appName} version={2}/>
-    
-      <Start
-          inputHandler={receiveInput}
-          //modalVisible={isModalVisible}
-          //dismissModal={dismissModal}
-      />
-
-
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Start">
+        <Stack.Screen name="Start" component={Start} options={{ headerShown: false }}/>
+        <Stack.Screen name="AllActivities" component={AllActivities} options={{ headerTitle: "All My Activities" }}/>
+        <Stack.Screen name="SpecialActivities" component={SpecialActivities} options={{ headerTitle: "Special Activities" }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

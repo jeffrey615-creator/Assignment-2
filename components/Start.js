@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Modal, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function Start({ inputHandler, modalVisible, dismissModal }) {
+export default function Start() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [emailError, setEmailError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
+
+  const navigation = useNavigation();
 
   function changeEmailHandler(changedEmail) {
     setEmail(changedEmail);
@@ -31,7 +34,7 @@ export default function Start({ inputHandler, modalVisible, dismissModal }) {
     const isPhoneNumberValid = isValidPhoneNumber(phoneNumber);
     
     if (isEmailValid && isPhoneNumberValid) {
-      inputHandler(email, phoneNumber);
+      navigation.navigate('AllActivities');
     } else {
       if (!isEmailValid) setEmailError('Invalid Email');
       if (!isPhoneNumberValid) setPhoneNumberError('Invalid Phone Number');
@@ -43,7 +46,6 @@ export default function Start({ inputHandler, modalVisible, dismissModal }) {
     setPhoneNumber("");
     setEmailError('');
     setPhoneNumberError('');
-    dismissModal && dismissModal();
   }
 
   return (
