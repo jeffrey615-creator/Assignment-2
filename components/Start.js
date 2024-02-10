@@ -116,17 +116,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    color: 'white', // Text color for the buttons
+    color: 'white', 
     fontSize: 16,
   },
   resetButton: {
-    backgroundColor: 'red', // Red color for the reset button
+    backgroundColor: 'red', 
   },
   enabledButton: {
-    backgroundColor: '#6200EE', // Blue color for the enabled start button
+    backgroundColor: '#6200EE', 
   },
   disabledButton: {
-    backgroundColor: '#9E9E9E', // Grey color for the disabled start button
-    color: 'white', // Text color should be set in buttonText style, not here
+    backgroundColor: '#9E9E9E', 
+    color: 'white', 
   },
 });

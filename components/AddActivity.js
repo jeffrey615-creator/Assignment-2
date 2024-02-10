@@ -19,9 +19,22 @@ export default function AddActivity() {
     { label: 'Cycling', value: 'Cycling' },
     { label: 'Hiking', value: 'Hiking' },
   ]);
+  const [isPickerShow, setIsPickerShow] = useState(false);
+  const [formattedDate, setFormattedDate] = useState(date.toDateString()); 
 
   const { addActivity } = useActivities();
   const navigation = useNavigation();
+
+  const handleFocus = () => {
+    setIsPickerShow(true); // Display the DateTimePicker when TextInput is focused
+  };
+
+  const handleChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate); // Update the date
+    setFormattedDate(currentDate.toDateString()); // Format and update the date string
+    setIsPickerShow(false); // Optionally hide the picker after selection
+  };
 
   const handleAddActivity = () => {
     if (!activityType || duration <= 0 || isNaN(duration)) {
@@ -29,10 +42,17 @@ export default function AddActivity() {
       return;
     }
 
+  function checkSpecialActivity(activityType, duration) {
+      // Check if the activity type is either Running or Weights and the duration is more than 60 minutes
+      return (activityType === 'Running' || activityType === 'Weights') && duration > 60;
+    }
+
     const newActivity = {
+      id: Math.random(),
       type: activityType,
       duration: Number(duration), // Ensure duration is stored as a number
-      date: date.toISOString(), // Store date in ISO format
+      date: formattedDate, // Store date in ISO format
+      isSpecialActivity: checkSpecialActivity(activityType, duration),
     };
 
     addActivity(newActivity);
@@ -66,21 +86,27 @@ export default function AddActivity() {
         onChangeText={setDuration}
         keyboardType="numeric"
         placeholder="Duration in minutes"
-        style={styles.input}
+        style={styles.duration}
       />
       
       <Text style={styles.label}>Date *</Text>
-      <DateTimePicker
-        testID="dateTimePicker"
-        value={date}
-        mode="date"
-        is24Hour={true}
-        display="calendar" 
-        onChange={(event, selectedDate) => {
-          setDate(selectedDate || date);
-        }}
-        style={styles.datePicker}
+      <TextInput
+        placeholder="Tap here to pick a date"
+        onFocus={handleFocus} // Trigger inline DateTimePicker on focus
+        style={styles.textInput}
+        value={formattedDate}
       />
+      {isPickerShow && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          is24Hour={true}
+          display="inline" 
+          onChange={handleChange}
+          style={styles.datePicker}
+        />
+      )}
   
       <View style={styles.buttonContainer}>
         <Button
@@ -113,17 +139,22 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 10,
   },
-  input: {
+  duration: {
     backgroundColor: '#C193F2',
+    borderWidth: 2,
+    borderColor: "#5611A1",
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   dropdown: {
     backgroundColor: '#C193F2',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 5,
+    borderColor: "#5611A1",
   },
   dropdownContainer: {
     backgroundColor: '#FFF',
@@ -140,8 +171,23 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   datePicker: {
-    width: '100%',
     marginBottom: 20,
+    backgroundColor: '#C193F2',
+    borderWidth: 2,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 5,
+    borderColor: "#5611A1",
+  },
+  textInput:{
+    marginBottom: 20,
+    backgroundColor: '#C193F2',
+    borderWidth: 2,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 5,
+    borderColor: "#5611A1",
+    padding:10,
   },
   buttonContainer: {
     flexDirection: 'row',

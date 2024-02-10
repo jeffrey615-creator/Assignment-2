@@ -33,7 +33,7 @@ export default function AllActivities({ navigation }) {
             <StatusBar style="auto" />
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 {activities.map((activityObj) => (
-                    <ActivitesList activityObj={activityObj} />
+                    <ActivitesList key={activityObj.id} activityObj={activityObj} />
                 ))}
             </ScrollView>
         </SafeAreaView>
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
     },
     scrollViewContent: {
         alignItems: "center",
-        paddingBottom: 20, // Add some padding at the bottom
+        paddingBottom: 20, 
     },
 });
