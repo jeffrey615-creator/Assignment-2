@@ -43,7 +43,7 @@ export default function AllActivities({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#9C80B0",
         justifyContent: "center",
     },
     scrollViewContent: {

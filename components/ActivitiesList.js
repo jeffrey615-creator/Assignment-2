@@ -10,7 +10,11 @@ export default function ActivitiesList({ activityObj }) {
           {/* Show exclamation mark if it's a special activity */}
           {activityObj.isSpecialActivity && <Text style={styles.specialIcon}>⚠️</Text>}
         </Text>
-        <Text style={styles.details}>{activityObj.date} | {activityObj.duration} min</Text>
+          {/* Date */}
+          <Text style={styles.date}>{activityObj.date}</Text>
+
+        {/* Duration */}
+        <Text style={styles.duration}>{activityObj.duration} min</Text>
       </View>
     </View>
   );
@@ -19,28 +23,39 @@ export default function ActivitiesList({ activityObj }) {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    backgroundColor: "purple",
+    backgroundColor: "#5611A1",
     marginTop: 15,
     padding: 10,
+    width: "80%",
   },
   detailRow: {
-    flexDirection: 'row', // Align items horizontally
-    justifyContent: 'space-between', // Distribute space evenly between the items
-    alignItems: 'center', // Center items vertically
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly', 
+    alignItems: 'center', 
   },
   type: {
-    fontSize: 16,
+    fontSize: 12,
     color: "white",
     fontWeight: "bold",
   },
-  details: {
-    fontSize: 16,
-    color: "white",
+  date: {
+    fontSize: 12,
+    color: "#5611A1",
+    borderWidth:1,
+    backgroundColor:"white",
+    padding:10,
+    fontWeight: "bold",
+  },
+  duration:{
+    fontSize: 12,
+    color: "#5611A1",
+    borderWidth:1,
+    backgroundColor:"white",
+    padding:10,
+    fontWeight: "bold",
   },
   specialIcon: {
-    // Additional styling for the exclamation mark if needed
     fontWeight: "bold",
     fontSize: 20,
-    marginRight: 6,
   },
 });
