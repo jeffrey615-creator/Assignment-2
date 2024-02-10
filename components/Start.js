@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -9,6 +9,7 @@ export default function Start() {
   const [emailError, setEmailError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
 
+  const isButtonDisabled = email.length === 0 && phoneNumber.length === 0;
   const navigation = useNavigation();
 
   function changeEmailHandler(changedEmail) {
@@ -68,10 +69,23 @@ export default function Start() {
         />
         {phoneNumberError ? <Text>{phoneNumberError}</Text> : null}
         <View style={styles.buttonsContainer}>
-          <Button title="Reset" onPress={cancelHandler} />
-          <Button title="Confirm" onPress={confirmHandler} />
-        </View>
-      </SafeAreaView>
+        {/* Reset Button */}
+        <TouchableOpacity 
+          onPress={cancelHandler} 
+          style={[styles.button, styles.resetButton]}
+        >
+          <Text style={styles.buttonText}>Reset</Text>
+        </TouchableOpacity>
+        {/* Start Button */}
+        <TouchableOpacity 
+          onPress={confirmHandler} 
+          style={[styles.button, isButtonDisabled ? styles.disabledButton : styles.enabledButton]}
+          disabled={isButtonDisabled}
+        >
+          <Text style={styles.buttonText}>Start</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -92,5 +106,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  buttonText: {
+    color: 'white', // Text color for the buttons
+    fontSize: 16,
+  },
+  resetButton: {
+    backgroundColor: 'red', // Red color for the reset button
+  },
+  enabledButton: {
+    backgroundColor: '#6200EE', // Blue color for the enabled start button
+  },
+  disabledButton: {
+    backgroundColor: '#9E9E9E', // Grey color for the disabled start button
+    color: 'white', // Text color should be set in buttonText style, not here
   },
 });
