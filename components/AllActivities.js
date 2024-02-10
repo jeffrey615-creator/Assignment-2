@@ -17,17 +17,6 @@ export default function AllActivities({ navigation }) {
 
     const { activities, addActivity } = useActivities();
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Button
-                    onPress={() => navigation.navigate('AddActivity')}
-                    title="Add"
-                />
-            ),
-        });
-    }, [navigation]);
-
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" />
@@ -43,7 +32,7 @@ export default function AllActivities({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#9C80B0",
+        backgroundColor: "#C193F2",
         justifyContent: "center",
     },
     scrollViewContent: {

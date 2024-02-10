@@ -35,11 +35,14 @@ export default function Start() {
     const isPhoneNumberValid = isValidPhoneNumber(phoneNumber);
     
     if (isEmailValid && isPhoneNumberValid) {
-      navigation.navigate('AllActivities');
+      navigation.navigate('Home', {
+        screen: 'AllActivities',
+      });
     } else {
       if (!isEmailValid) setEmailError('Invalid Email');
       if (!isPhoneNumberValid) setPhoneNumberError('Invalid Phone Number');
     }
+
   }
 
   function cancelHandler() {
