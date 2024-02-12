@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 
 function Home({}) {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={({ navigation }) => globalScreenOptions(navigation)} >
       <Tab.Screen name="AllActivities" component={AllActivities} />
       <Tab.Screen name="SpecialActivities" component={SpecialActivities} />
     </Tab.Navigator>
@@ -36,9 +36,9 @@ export default function App() {
   return (
     <ActivitiesProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Start" screenOptions={({ navigation }) => globalScreenOptions(navigation)}  >
+        <Stack.Navigator initialRouteName="Start"  >
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="AddActivity" component={AddActivity} options={{ headerTitle: "Add An Activity" }} />
         </Stack.Navigator>
       </NavigationContainer>
