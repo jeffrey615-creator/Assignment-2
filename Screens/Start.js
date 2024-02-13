@@ -39,8 +39,8 @@ export default function Start() {
         screen: 'AllActivities',
       });
     } else {
-      if (!isEmailValid) setEmailError('Invalid Email');
-      if (!isPhoneNumberValid) setPhoneNumberError('Invalid Phone Number');
+      if (!isEmailValid) setEmailError('Please enter a valid email address');
+      if (!isPhoneNumberValid) setPhoneNumberError('Please enter a valid phone number');
     }
 
   }

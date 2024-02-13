@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useState, useLayoutEffect, useEffect} from "react";
-import ActivitesList from "./ActivitiesList";
+import ActivitesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
 
 
