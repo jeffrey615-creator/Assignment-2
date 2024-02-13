@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { colors } from '../Color';
 
 
 export default function Start() {
@@ -98,21 +99,21 @@ export default function Start() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C193F2', 
+    backgroundColor: colors.lightPurple, 
     alignItems: 'center', 
     justifyContent: 'center', 
     padding: 16, 
   },
   text: {
-    color: '#5611A1', 
+    color: colors.darkPurple, 
     fontSize: 16, 
     alignSelf: 'flex-start', 
     marginLeft: 20, 
   },
   input: {
-    backgroundColor: '#C193F2',
+    backgroundColor: colors.lightPurple,
     borderWidth: 2,
-    borderColor: "#5611A1",
+    borderColor: colors.darkPurple,
     borderRadius: 5,
     padding: 10,
     margin:10,
@@ -135,11 +136,12 @@ const styles = StyleSheet.create({
     height: 50,
   },
   resetText: {
-    color: '#D04848', 
+    color: colors.red,
     fontSize: 16,
   },
   enabledText: {
-    color: '#6200EE',
+    color: colors.darkPurple,
+    fontSize: 16,
   },
   disabledText: {
     color: 'white',

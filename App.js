@@ -9,6 +9,7 @@ import { Button, StyleSheet } from 'react-native';
 import { ActivitiesProvider } from './ActivityContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { colors } from './Color';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,24 +19,24 @@ function Home({}) {
   return (
     <Tab.Navigator screenOptions={({ navigation }) => globalScreenOptions(navigation) } >
       <Tab.Screen name="AllActivities" component={AllActivities} options={{
-          headerStyle: { backgroundColor: '#5611A1' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: colors.darkPurple },
+          headerTintColor: colors.white,
           headerTitleStyle: { fontWeight: 'bold' },
-          tabBarActiveTintColor: '#FDE767', 
-          tabBarInactiveTintColor: 'gray', 
-          tabBarStyle: { backgroundColor: '#5611A1' }, 
+          tabBarActiveTintColor: colors.yellow, 
+          tabBarInactiveTintColor: colors.gray, 
+          tabBarStyle: { backgroundColor: colors.darkPurple }, 
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="attach-money" size={size} color={color} />
           )
         }}
       />
       <Tab.Screen name="SpecialActivities" component={SpecialActivities} options={{
-          headerStyle: { backgroundColor: '#5611A1' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: colors.darkPurple },
+          headerTintColor: colors.white,
           headerTitleStyle: { fontWeight: 'bold' },
-          tabBarActiveTintColor: '#FDE767',
-          tabBarInactiveTintColor: 'gray', 
-          tabBarStyle: { backgroundColor: '#5611A1' }, 
+          tabBarActiveTintColor: colors.yellow,
+          tabBarInactiveTintColor: colors.gray, 
+          tabBarStyle: { backgroundColor: colors.darkPurple }, 
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="exclamation" size={24} color={color} />
           )
@@ -49,7 +50,7 @@ const globalScreenOptions = (navigation) => ({
     <Button
       onPress={() => navigation.navigate('AddActivity')}
       title="Add"
-      color="yellow"
+      color= {colors.yellow}
     />
   ),
 });
@@ -63,8 +64,8 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="AddActivity" component={AddActivity} options={{ 
             headerTitle: "Add An Activity", 
-            headerStyle: { backgroundColor: '#5611A1' },
-            headerTintColor: '#fff',
+            headerStyle: { backgroundColor: colors.darkPurple },
+            headerTintColor: colors.white,
             headerTitleStyle: { fontWeight: 'bold' },
             }} />
         </Stack.Navigator>

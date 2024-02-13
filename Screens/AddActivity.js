@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { colors } from '../Color';
 
 export default function AddActivity() {
   const [activityType, setActivityType] = useState(null);
@@ -127,22 +128,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor:"#C193F2",
+    backgroundColor:colors.lightPurple,
   },
   formContainer: {
     flex: 1,
     justifyContent: 'center'
   },
   label: {
-    color: '#5611A1',
+    color: colors.darkPurple,
     fontSize: 16,
     marginBottom: 5,
     marginLeft: 10,
   },
   duration: {
-    backgroundColor: '#C193F2',
+    backgroundColor: colors.lightPurple,
     borderWidth: 2,
-    borderColor: "#5611A1",
+    borderColor: colors.darkPurple,
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
@@ -150,43 +151,43 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   dropdown: {
-    backgroundColor: '#C193F2',
+    backgroundColor: colors.lightPurple,
     borderRadius: 5,
     padding: 10,
     marginBottom: 5,
-    borderColor: "#5611A1",
+    borderColor: colors.darkPurple,
   },
   dropdownContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
     borderRadius: 5,
     marginLeft: 10,
   },
   placeholderStyle: {
-    color: '#5611A1',
+    color: colors.darkPurple,
   },
   textStyle: {
-    color: '#000',
+    color: colors.black,
   },
   labelStyle: {
-    color: '#000',
+    color: colors.black,
   },
   datePicker: {
     marginBottom: 20,
-    backgroundColor: '#C193F2',
+    backgroundColor: colors.lightPurple,
     borderWidth: 2,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 5,
-    borderColor: "#5611A1",
+    borderColor: colors.darkPurple,
   },
   textInput:{
     marginBottom: 20,
-    backgroundColor: '#C193F2',
+    backgroundColor: colors.lightPurple,
     borderWidth: 2,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 5,
-    borderColor: "#5611A1",
+    borderColor: colors.darkPurple,
     padding:10,
   },
   buttonContainer: {
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   buttonText: {
-    color: '#FFF',
+    color: colors.white,
     fontSize: 18,
     textAlign: 'center',
   },

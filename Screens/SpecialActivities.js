@@ -10,8 +10,7 @@ import {
 import { useState, useLayoutEffect, useEffect} from "react";
 import ActivitiesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
-
-
+import { colors } from '../Color';
 
 export default function AllActivities({ navigation }) {
 
@@ -34,7 +33,7 @@ export default function AllActivities({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#C193F2",
+        backgroundColor: colors.lightPurple,
         justifyContent: "center",
     },
     scrollViewContent: {
