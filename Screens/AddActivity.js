@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Platform, TouchableOpacity, Text } from 'react-native';
+import { Modal, Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Platform, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors } from '../Color';
 
 export default function AddActivity() {
+  const [modalVisible, setModalVisible] = useState(false);
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
@@ -79,8 +80,7 @@ export default function AddActivity() {
         setItems={setItems}
         placeholder="Select an activity type"
         containerStyle={styles.dropdown}
-        zIndex={3000}
-        zIndexInverse={1000}
+        zIndex={5000}
         style={styles.dropdown}
         dropDownContainerStyle={styles.dropdownContainer}
         placeholderStyle={styles.placeholderStyle}
@@ -95,6 +95,7 @@ export default function AddActivity() {
         keyboardType="numeric"
         placeholder="Duration in minutes"
         style={styles.duration}
+        zIndex={3000}
       />
       {/* Date Input */}
       <Text style={styles.label}>Date *</Text>
@@ -103,6 +104,7 @@ export default function AddActivity() {
         onFocus={handleFocus} 
         style={styles.textInput}
         value={formattedDate}
+        zIndex={2000}
       />
       {/* DateTimePicker (hidden by default) */}
       {isPickerShow && (
@@ -114,6 +116,7 @@ export default function AddActivity() {
           display="inline" 
           onChange={handleChange}
           style={styles.datePicker}
+          zIndex={2000}
         />
       )}
       {/* DateTimePicker (hidden by default) */}
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   label: {
     color: colors.darkPurple,
@@ -166,11 +169,17 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 5,
     borderColor: colors.darkPurple,
+    elevation: 20,
+    overflow:"visible",
+    zIndex: 5000,
   },
   dropdownContainer: {
     backgroundColor: colors.white,
     borderRadius: 5,
     marginLeft: 10,
+    elevation: 20,
+    overflow:"visible",
+    zIndex: 5000,
   },
   placeholderStyle: {
     color: colors.darkPurple,
