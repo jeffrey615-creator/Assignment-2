@@ -1,21 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
-  View,
-  Text,
-  Button,
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { useState, useLayoutEffect, useEffect} from "react";
 import ActivitiesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
 import { colors } from '../Color';
 
 export default function AllActivities({ navigation }) {
 
+    // Retrieve activities and addActivity function from ActivityContext
     const { activities, addActivity } = useActivities();
 
+    // Filter special activities
     const specialActivities = activities.filter(activity => activity.isSpecialActivity);
 
     return (

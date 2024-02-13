@@ -10,42 +10,51 @@ export default function Start() {
   const [emailError, setEmailError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
 
+  // Determine if the button should be disabled
   const isButtonDisabled = email.length === 0 && phoneNumber.length === 0;
   const navigation = useNavigation();
 
+  // Function to handle email input changes
   function changeEmailHandler(changedEmail) {
     setEmail(changedEmail);
     if (changedEmail) setEmailError('');
   }
 
+  // Function to handle phone number input changes
   function changePhoneNumberHandler(changedPhoneNumber) {
     setPhoneNumber(changedPhoneNumber);
     if (changedPhoneNumber) setPhoneNumberError('');
   }
 
+  // Function to validate email format
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
+  // Function to validate phone number format
   function isValidPhoneNumber(phoneNumber) {
     return /^\d{10}$/.test(phoneNumber);
   }
 
+  // Function to handle start button press
   function confirmHandler() {
     const isEmailValid = isValidEmail(email);
     const isPhoneNumberValid = isValidPhoneNumber(phoneNumber);
     
     if (isEmailValid && isPhoneNumberValid) {
+      // Navigate to the Home screen
       navigation.navigate('Home', {
         screen: 'AllActivities',
       });
     } else {
+      // Display error messages if email or phone number is invalid
       if (!isEmailValid) setEmailError('Please enter a valid email address');
       if (!isPhoneNumberValid) setPhoneNumberError('Please enter a valid phone number');
     }
 
   }
 
+  // Function to handle reset button press
   function cancelHandler() {
     setEmail("");
     setPhoneNumber("");

@@ -15,6 +15,7 @@ import { colors } from './Color';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// Function for the Home screen (Tab Navigator)
 function Home({}) {
   return (
     <Tab.Navigator screenOptions={({ navigation }) => globalScreenOptions(navigation) } >
@@ -45,6 +46,7 @@ function Home({}) {
   );
 }
 
+// Function to set global screen options (e.g., header button)
 const globalScreenOptions = (navigation) => ({
   headerRight: () => (
     <Button
@@ -60,8 +62,11 @@ export default function App() {
     <ActivitiesProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Start" >
+          {/* Start screen */}
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
+          {/* Home screen with tab navigation */}
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          {/* AddActivity screen */}
           <Stack.Screen name="AddActivity" component={AddActivity} options={{ 
             headerTitle: "Add An Activity", 
             headerStyle: { backgroundColor: colors.darkPurple },

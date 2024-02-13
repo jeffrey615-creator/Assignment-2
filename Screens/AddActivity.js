@@ -26,10 +26,12 @@ export default function AddActivity() {
   const { addActivity } = useActivities();
   const navigation = useNavigation();
 
+  // Display the DateTimePicker when TextInput is focused
   const handleFocus = () => {
-    setIsPickerShow(true); // Display the DateTimePicker when TextInput is focused
+    setIsPickerShow(true); 
   };
 
+  // Update the date and hide the picker after selection
   const handleChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate); // Update the date
@@ -37,17 +39,19 @@ export default function AddActivity() {
     setIsPickerShow(false); // Optionally hide the picker after selection
   };
 
+  // Function to add activity
   const handleAddActivity = () => {
     if (!activityType || duration <= 0 || isNaN(duration)) {
       Alert.alert("Invalid input", "Please ensure all fields are filled out correctly, and duration is a positive number.");
       return;
     }
 
+  // Function to check if the activity is special (e.g., Running or Weights for more than 60 minutes)
   function checkSpecialActivity(activityType, duration) {
-      // Check if the activity type is either Running or Weights and the duration is more than 60 minutes
       return (activityType === 'Running' || activityType === 'Weights') && duration > 60;
     }
 
+    // Create a new activity object
     const newActivity = {
       id: Math.random(),
       type: activityType,
@@ -56,13 +60,15 @@ export default function AddActivity() {
       isSpecialActivity: checkSpecialActivity(activityType, duration),
     };
 
+    // Add the new activity and navigate back
     addActivity(newActivity);
-    navigation.goBack(); // Navigate back after adding activity
+    navigation.goBack(); 
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.formContainer}>
+        {/* Activity Type Dropdown */}
         <Text style={styles.label}>Activity *</Text>
         <DropDownPicker
         open={open}
@@ -81,6 +87,7 @@ export default function AddActivity() {
         textStyle={styles.textStyle}
         labelStyle={styles.labelStyle}
       />
+      {/* Duration Input */}
       <Text style={styles.label}>Duration (min) *</Text>
       <TextInput
         value={duration}
@@ -89,14 +96,15 @@ export default function AddActivity() {
         placeholder="Duration in minutes"
         style={styles.duration}
       />
-      
+      {/* Date Input */}
       <Text style={styles.label}>Date *</Text>
       <TextInput
         placeholder="Tap here to pick a date"
-        onFocus={handleFocus} // Trigger inline DateTimePicker on focus
+        onFocus={handleFocus} 
         style={styles.textInput}
         value={formattedDate}
       />
+      {/* DateTimePicker (hidden by default) */}
       {isPickerShow && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -108,15 +116,17 @@ export default function AddActivity() {
           style={styles.datePicker}
         />
       )}
-  
+      {/* DateTimePicker (hidden by default) */}
       <View style={styles.buttonContainer}>
         <Button
           title="Cancel"
           onPress={() => navigation.goBack()}
+          color={colors.red}
         />
         <Button
           title="Save"
           onPress={handleAddActivity}
+          color={colors.darkPurple}
         />
       </View>
       </View>
@@ -194,22 +204,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingBottom: 20,
-  },
-  cancelButton: {
-    backgroundColor: 'red',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-  },
-  saveButton: {
-    backgroundColor: 'blue',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: 18,
-    textAlign: 'center',
   },
 });

@@ -1,13 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
-  View,
-  Text,
-  Button,
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { useState, useLayoutEffect, useEffect} from "react";
 import ActivitesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
 import { colors } from '../Color';
