@@ -1,7 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Header from './components/Header';
 import Start from './components/Start';
 import AllActivities from './components/AllActivities';
 import SpecialActivities from './components/SpecialActivities';

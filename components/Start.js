@@ -55,14 +55,17 @@ export default function Start() {
   return (
       <SafeAreaView style={styles.container}>
         {/* Email Input */}
+
+        <Text style={styles.text}>Email Address</Text>
         <TextInput 
-          placeholder="Email"
           style={styles.input} 
           value={email} 
           onChangeText={changeEmailHandler}
         />
         {emailError ? <Text>{emailError}</Text> : null}
+
         {/* Phone Number Input */}
+        <Text style={styles.text}>Phone Number</Text>
         <TextInput 
           placeholder="Phone Number"
           style={styles.input} 
@@ -77,15 +80,15 @@ export default function Start() {
           onPress={cancelHandler} 
           style={[styles.button, styles.resetButton]}
         >
-          <Text style={styles.buttonText}>Reset</Text>
+          <Text style={styles.resetText}>Reset</Text>
         </TouchableOpacity>
         {/* Start Button */}
         <TouchableOpacity 
           onPress={confirmHandler} 
-          style={[styles.button, isButtonDisabled ? styles.disabledButton : styles.enabledButton]}
+          style={styles.button}
           disabled={isButtonDisabled}
         >
-          <Text style={styles.buttonText}>Start</Text>
+          <Text style={[styles.buttonText, isButtonDisabled ? styles.disabledText : styles.enabledText]}>Start</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -93,43 +96,53 @@ export default function Start() {
 }
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    flexDirection: "row",
-    marginTop: 20,
-  },
-  input: {
-    borderBottomWidth: 2,
-    borderBottomColor: "purple",
-    width: "80%",
-    padding: 10,
-    marginTop: 20,
-  },
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#C193F2', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 16, 
+  },
+  text: {
+    color: '#5611A1', 
+    fontSize: 16, 
+    alignSelf: 'flex-start', 
+    marginLeft: 20, 
+  },
+  input: {
+    backgroundColor: '#C193F2',
+    borderWidth: 2,
+    borderColor: "#5611A1",
+    borderRadius: 5,
+    padding: 10,
+    margin:10,
+    width:'90%',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    width: '90%', 
+    marginTop: 20,
   },
   button: {
+    flex: 1, 
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 10,
+    height: 50,
   },
-  buttonText: {
-    color: 'white', 
+  resetText: {
+    color: '#D04848', 
     fontSize: 16,
   },
-  resetButton: {
-    backgroundColor: 'red', 
+  enabledText: {
+    color: '#6200EE',
   },
-  enabledButton: {
-    backgroundColor: '#6200EE', 
-  },
-  disabledButton: {
-    backgroundColor: '#9E9E9E', 
-    color: 'white', 
+  disabledText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
