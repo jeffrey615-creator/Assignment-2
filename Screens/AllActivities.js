@@ -3,8 +3,10 @@ import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import ActivitesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
 import { colors } from '../Color';
+import { database } from '../firebase-files/firebaseSetup';
 
 export default function AllActivities({ navigation }) {
+    console.log(database);
     const { activities } = useActivities();
 
     const renderItem = ({ item }) => (
@@ -31,6 +33,8 @@ const styles = StyleSheet.create({
     },
     flatListContent: {
         alignItems: "center",
-        paddingBottom: 20,
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
 });
