@@ -1,26 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import React from 'react';
+import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import ActivitesList from "../components/ActivitiesList";
 import { useActivities } from "../ActivityContext";
 import { colors } from '../Color';
 
-
 export default function AllActivities({ navigation }) {
+    const { activities } = useActivities();
 
-    const { activities, addActivity } = useActivities();
+    const renderItem = ({ item }) => (
+        <ActivitesList key={item.id} activityObj={item} />
+    );
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar style="auto" />
-            <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                {activities.map((activityObj) => (
-                    <ActivitesList key={activityObj.id} activityObj={activityObj} />
-                ))}
-            </ScrollView>
+            <FlatList
+                data={activities}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.flatListContent}
+            />
         </SafeAreaView>
     );
 }
@@ -31,8 +29,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightPurple,
         justifyContent: "center",
     },
-    scrollViewContent: {
+    flatListContent: {
         alignItems: "center",
-        paddingBottom: 20, 
+        paddingBottom: 20,
     },
 });
