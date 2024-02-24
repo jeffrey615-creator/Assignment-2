@@ -10,6 +10,7 @@ import { ActivitiesProvider } from './ActivityContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { colors } from './Color';
+import EditActivity from './components/EditActivity';
 
 
 const Stack = createNativeStackNavigator();
@@ -66,6 +67,15 @@ export default function App() {
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
           {/* Home screen with tab navigation */}
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen
+          options={({ route }) => {
+            return {
+              headerTitle: route.params ? route.params.data.text : "Edit",
+            };
+          }}
+          name="Edit"
+          component={EditActivity}
+        />
           {/* AddActivity screen */}
           <Stack.Screen name="AddActivity" component={AddActivity} options={{ 
             headerTitle: "Add An Activity", 

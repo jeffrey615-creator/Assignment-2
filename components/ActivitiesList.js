@@ -1,22 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import PressableButton from "./PressableButton"; // Ensure this path is correct
 
-export default function ActivitiesList({ activityObj }) {
+export default function ActivitiesList({ activityObj, editFunction }) {
   return (
-    <View style={styles.container}>
+    <PressableButton onPressFunction={() => editFunction(activityObj)} customStyle={styles.container}>
       <View style={styles.detailRow}>
         <Text style={styles.type}>
           {activityObj.type}
-          {/* Show exclamation mark if it's a special activity */}
           {activityObj.isSpecialActivity && <Text style={styles.specialIcon}>⚠️</Text>}
         </Text>
-          {/* Date */}
-          <Text style={styles.date}>{activityObj.date}</Text>
-
-        {/* Duration */}
+        <Text style={styles.date}>{activityObj.date}</Text>
         <Text style={styles.duration}>{activityObj.duration} min</Text>
       </View>
-    </View>
+    </PressableButton>
   );
 }
 
@@ -27,10 +24,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 10,
     width: "80%",
+    alignSelf: "center", // Center the component
   },
   detailRow: {
     flexDirection: 'row', 
-    justifyContent: 'space-evenly', 
+    justifyContent: 'space-between', // Adjusted for better spacing
     alignItems: 'center', 
   },
   type: {
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     padding:10,
     fontWeight: "bold",
   },
-  duration:{
+  duration: {
     fontSize: 12,
     color: "#5611A1",
     borderWidth:1,
