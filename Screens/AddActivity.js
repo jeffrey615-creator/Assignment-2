@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Platform, TouchableOpacity, Text } from 'react-native';
+import { Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Platform, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors } from '../Color';
+import { writeToDB } from '../firebase-files/firestoreHelper';
 
 export default function AddActivity() {
-  const [modalVisible, setModalVisible] = useState(false);
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
@@ -54,7 +54,6 @@ export default function AddActivity() {
 
     // Create a new activity object
     const newActivity = {
-      id: Math.random(),
       type: activityType,
       duration: Number(duration), // Ensure duration is stored as a number
       date: formattedDate, // Store date in ISO format
@@ -62,7 +61,7 @@ export default function AddActivity() {
     };
 
     // Add the new activity and navigate back
-    addActivity(newActivity);
+    writeToDB(newActivity);
     navigation.goBack(); 
   };
 
