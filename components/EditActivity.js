@@ -1,38 +1,52 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from 'react';
+import { View, Button, Alert } from 'react-native';
+import AddActivity from '../Screens/AddActivity';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { deleteFromDB } from '../firebase-files/firestoreHelper';
 
-export default function EditActivity({ navigation, route }) {
-  const [warning, setWarning] = useState(false);
-  function warningHandler() {
-    console.log("warning");
-    setWarning(true);
-  }
-  // functions inside useEffect are called after the rendering
-  useEffect(() => {
+export default function EditActivity() {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const activityData = route.params?.data;
+
+  const showDeleteConfirmation = () => {
+    Alert.alert(
+      "Delete Activity", // Alert Title
+      "Are you sure you want to delete this activity?", // My Alert Msg
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => handleDelete() }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteFromDB(activityData.id);
+      Alert.alert("Activity Deleted", "The activity has been successfully deleted.");
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert("Error", "There was an issue deleting the activity.");
+      console.error(error);
+    }
+  };
+
+  React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
-        return <Button title="Warning" color="gray" onPress={warningHandler} />;
-      },
+      headerRight: () => (
+        <Button onPress={showDeleteConfirmation} title="Delete" color="red" />
+      ),
     });
-  }, []);
+  }, [navigation]);
 
   return (
-    <View>
-      {route.params ? (
-        <Text>
-          You are viewing details of {route.params.data.text} with id{" "}
-          {route.params.data.id}
-        </Text>
-      ) : (
-        <Text> "Extra details"</Text>
-      )}
-      {warning && <Text style={{ color: "red" }}>WARNING</Text>}
-      <Button
-        title="extra details"
-        onPress={() => navigation.push("Details")}
-      />
+    <View style={{ flex: 1 }}>
+      <AddActivity route={{ ...route, params: { ...route.params, initialValues: activityData } }} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

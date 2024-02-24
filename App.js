@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { colors } from './Color';
 import EditActivity from './components/EditActivity';
+import PressableButton from './components/PressableButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 const Stack = createNativeStackNavigator();
@@ -50,11 +52,11 @@ function Home({}) {
 // Function to set global screen options (e.g., header button)
 const globalScreenOptions = (navigation) => ({
   headerRight: () => (
-    <Button
-      onPress={() => navigation.navigate('AddActivity')}
-      title="Add"
-      color= {colors.yellow}
-    />
+    <PressableButton
+      onPressFunction={() => navigation.navigate('AddActivity')}
+      customStyle={{ marginRight: 10 }}>
+      <Icon name="add" size={24} color="white" backgroundColor={colors.darkPurple} />
+    </PressableButton>
   ),
 });
 
