@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Text } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, TextInput, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors } from '../Color';
 import { writeToDB, updateInDB } from '../firebase-files/firestoreHelper';
 import Checkbox from 'expo-checkbox';
+import PressableButton from '../components/PressableButton';
 
 export default function AddActivity({route}) {
   const initialValues = route.params?.initialValues;
@@ -167,16 +168,18 @@ export default function AddActivity({route}) {
         )
       }
       <View style={styles.buttonContainer}>
-        <Button
-          title="Cancel"
-          onPress={() => navigation.goBack()}
-          color={colors.red}
-        />
-        <Button
-          title="Save"
-          onPress={isEditMode ? showUpdateConfirmation : handleAddActivity}
-          color={colors.darkPurple}
-        />
+        <PressableButton
+          onPressFunction={() => navigation.goBack()}
+          customStyle={[styles.pressableButton, { backgroundColor: colors.red }]} // Adjust style as needed
+        >
+          <Text style={styles.pressableButtonText}>Cancel</Text>
+        </PressableButton>
+        <PressableButton
+          onPressFunction={isEditMode ? showUpdateConfirmation : handleAddActivity}
+          customStyle={[styles.pressableButton, { backgroundColor: colors.darkPurple }]} // Adjust style as needed
+        >
+          <Text style={styles.pressableButtonText}>Save</Text>
+        </PressableButton>
       </View>
       </View>
 
