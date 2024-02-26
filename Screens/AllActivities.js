@@ -30,7 +30,7 @@ export default function AllActivities({ navigation }) {
     );
 
     function activityPressHandler(ActivitiesList) {
-        navigation.navigate("Edit", { data: ActivitiesList });
+        navigation.navigate("Edit", {isEditMode: true, data: ActivitiesList });
     }
 
     return (
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     flatListContent: {
-        alignItems: "center",
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,

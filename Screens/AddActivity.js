@@ -170,19 +170,18 @@ export default function AddActivity({route}) {
       <View style={styles.buttonContainer}>
         <PressableButton
           onPressFunction={() => navigation.goBack()}
-          customStyle={[styles.pressableButton, { backgroundColor: colors.red }]} // Adjust style as needed
+          customStyle={styles.pressableButton} 
         >
-          <Text style={styles.pressableButtonText}>Cancel</Text>
+          <Text style={styles.cancelButtonText}>Cancel</Text>
         </PressableButton>
         <PressableButton
           onPressFunction={isEditMode ? showUpdateConfirmation : handleAddActivity}
-          customStyle={[styles.pressableButton, { backgroundColor: colors.darkPurple }]} // Adjust style as needed
+          customStyle={styles.pressableButton} 
         >
-          <Text style={styles.pressableButtonText}>Save</Text>
+          <Text style={styles.saveButtonText}>Save</Text>
         </PressableButton>
       </View>
       </View>
-
     </SafeAreaView>
   );
 }
@@ -268,5 +267,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding:10,
+  },
+  pressableButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  saveButtonText: {
+    color: colors.darkPurple, 
+    fontSize: 16,
+  },
+  cancelButtonText:{
+    color: colors.red, 
+    fontSize: 16,
   }
 });

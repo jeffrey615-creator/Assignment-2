@@ -73,6 +73,9 @@ export default function App() {
           options={({ route }) => {
             return {
               headerTitle: route.params ? route.params.data.text : "Edit",
+              headerStyle: { backgroundColor: colors.darkPurple },
+              headerTintColor: colors.white,
+              headerTitleStyle: { fontWeight: 'bold' },
             };
           }}
           name="Edit"

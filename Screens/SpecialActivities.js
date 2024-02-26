@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     flatListContent: {
-        alignItems: "center",
-        paddingBottom: 20,
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
 });

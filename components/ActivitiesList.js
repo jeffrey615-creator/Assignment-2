@@ -23,18 +23,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#5611A1",
     marginTop: 15,
     padding: 10,
-    width: "80%",
-    alignSelf: "center", // Center the component
+    //width: "80%",
+    alignSelf: "stretch", // Center the component
   },
   detailRow: {
     flexDirection: 'row', 
     justifyContent: 'space-between', // Adjusted for better spacing
     alignItems: 'center', 
+    flex:1,
   },
   type: {
     fontSize: 12,
     color: "white",
     fontWeight: "bold",
+    flex:1,
   },
   date: {
     fontSize: 12,
@@ -43,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor:"white",
     padding:10,
     fontWeight: "bold",
+    flex:1,
   },
   duration: {
     fontSize: 12,

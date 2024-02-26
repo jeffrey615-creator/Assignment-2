@@ -3,6 +3,9 @@ import { View, Button, Alert } from 'react-native';
 import AddActivity from '../Screens/AddActivity';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { deleteFromDB } from '../firebase-files/firestoreHelper';
+import PressableButton from './PressableButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { colors } from '../Color';
 
 export default function EditActivity() {
   const navigation = useNavigation();
@@ -11,8 +14,8 @@ export default function EditActivity() {
 
   const showDeleteConfirmation = () => {
     Alert.alert(
-      "Delete Activity", // Alert Title
-      "Are you sure you want to delete this activity?", // My Alert Msg
+      "Delete Activity", 
+      "Are you sure you want to delete this activity?", 
       [
         {
           text: "No",
@@ -39,7 +42,9 @@ export default function EditActivity() {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button onPress={showDeleteConfirmation} title="Delete" color="red" />
+        <PressableButton onPress={showDeleteConfirmation} title="Delete" color="red">
+            <Icon name="delete" size={24} color="white" backgroundColor={colors.darkPurple} />
+        </PressableButton>
       ),
     });
   }, [navigation]);
