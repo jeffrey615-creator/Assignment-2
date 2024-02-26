@@ -16,7 +16,7 @@ export default function AddActivity({route}) {
 
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
-  const [date, setDate] = useState(initialValues ? new Date(initialValues.date) : new Date());
+  const [date, setDate] = useState(null);
   const [isSelected, setSelection] = useState(initialValues?.isSpecialActivity || false);
   const [open, setOpen] = useState(false); // Control dropdown open state
   const [items, setItems] = useState([ // Dropdown items
@@ -29,14 +29,15 @@ export default function AddActivity({route}) {
     { label: 'Hiking', value: 'Hiking' },
   ]);
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [formattedDate, setFormattedDate] = useState(date.toDateString()); 
+  const [formattedDate, setFormattedDate] = useState(''); 
 
   const { addActivity } = useActivities();
   const navigation = useNavigation();
 
   // Display the DateTimePicker when TextInput is focused
-  const handleFocus = () => {
-    setIsPickerShow(true); 
+  const handleOpenPicker = () => {
+    if (!date) setDate(new Date()); // Set an initial date if none is selected
+    setIsPickerShow(true);
   };
 
   // Update the date and hide the picker after selection
@@ -44,7 +45,7 @@ export default function AddActivity({route}) {
     const currentDate = selectedDate || date;
     setDate(currentDate); // Update the date
     setFormattedDate(currentDate.toDateString()); // Format and update the date string
-    setIsPickerShow(false); // Optionally hide the picker after selection
+    setIsPickerShow(false); // Hide the picker after selection
   };
 
   const showUpdateConfirmation = () => {
@@ -136,22 +137,20 @@ export default function AddActivity({route}) {
       <Text style={styles.label}>Date *</Text>
       <TextInput
         placeholder="Tap here to pick a date"
-        onFocus={handleFocus} 
         style={styles.textInput}
         value={formattedDate}
-        zIndex={2000}
+        editable={false} 
+        onTouchStart={handleOpenPicker} 
       />
       {/* DateTimePicker (hidden by default) */}
-      {isPickerShow && (
+      {isPickerShow && date && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
           mode="date"
           is24Hour={true}
-          display="inline" 
+          display="inline"  
           onChange={handleChange}
-          style={styles.datePicker}
-          zIndex={2000}
         />
       )}
       {/* DateTimePicker (hidden by default) */}
