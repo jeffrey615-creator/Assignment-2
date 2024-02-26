@@ -8,10 +8,12 @@ export default function ActivitiesList({ activityObj, editFunction }) {
       <View style={styles.detailRow}>
         <Text style={styles.type}>
           {activityObj.type}
-          {activityObj.isSpecialActivity && <Text style={styles.specialIcon}>⚠️</Text>}
         </Text>
-        <Text style={styles.date}>{activityObj.date}</Text>
-        <Text style={styles.duration}>{activityObj.duration} min</Text>
+        <View style={styles.rightAlignedItems}>
+          {activityObj.isSpecialActivity && <Text style={styles.specialIcon}>⚠️</Text>}
+          <Text style={styles.date}>{activityObj.date}</Text>
+          <Text style={styles.duration}>{activityObj.duration} min</Text>
+        </View>
       </View>
     </PressableButton>
   );
@@ -23,40 +25,42 @@ const styles = StyleSheet.create({
     backgroundColor: "#5611A1",
     marginTop: 15,
     padding: 10,
-    //width: "80%",
     alignSelf: "stretch", // Center the component
   },
   detailRow: {
     flexDirection: 'row', 
     justifyContent: 'space-between', // Adjusted for better spacing
     alignItems: 'center', 
-    flex:1,
+    flex: 1,
   },
   type: {
     fontSize: 12,
     color: "white",
     fontWeight: "bold",
-    flex:1,
+  },
+  rightAlignedItems: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   date: {
     fontSize: 12,
     color: "#5611A1",
-    borderWidth:1,
-    backgroundColor:"white",
-    padding:10,
+    borderWidth: 1,
+    backgroundColor: "white",
+    padding: 10,
     fontWeight: "bold",
-    flex:1,
   },
   duration: {
     fontSize: 12,
     color: "#5611A1",
-    borderWidth:1,
-    backgroundColor:"white",
-    padding:10,
+    borderWidth: 1,
+    backgroundColor: "white",
+    padding: 10,
     fontWeight: "bold",
   },
   specialIcon: {
     fontWeight: "bold",
     fontSize: 20,
+    marginRight: 4, // Add some space between the icon and the date
   },
 });
