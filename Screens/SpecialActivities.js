@@ -12,9 +12,12 @@ export default function AllActivities({ navigation }) {
 
     // Render function for each item in the list
     const renderActivity = ({ item }) => (
-        <ActivitiesList key={item.id} activityObj={item} />
+        <ActivitiesList key={item.id} activityObj={item} editFunction={activityPressHandler}/>
     );
 
+    function activityPressHandler(ActivitiesList) {
+        navigation.navigate("Edit", {isEditMode: true, data: ActivitiesList });
+    }
     return (
         <SafeAreaView style={styles.container}>
             <FlatList

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, SafeAreaView, StyleSheet, TextInput, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
@@ -12,11 +12,13 @@ import PressableButton from '../components/PressableButton';
 export default function AddActivity({route}) {
   const initialValues = route.params?.initialValues;
   const isEditMode = !!route.params?.initialValues;   
-  console.log(route.params);
+  console.log(initialValues);
+  console.log(date);
+  console.log(formattedDate);
 
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
   const [isSelected, setSelection] = useState(initialValues?.isSpecialActivity || false);
   const [open, setOpen] = useState(false); // Control dropdown open state
   const [items, setItems] = useState([ // Dropdown items
@@ -33,6 +35,16 @@ export default function AddActivity({route}) {
 
   const { addActivity } = useActivities();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (initialValues?.date) {
+      const initialDate = new Date(initialValues.date);
+      setDate(initialDate);
+      setFormattedDate(initialDate.toDateString()); // Format the date to a readable string
+    } else {
+      setFormattedDate(''); // Reset or set to current date if you prefer
+    }
+  }, [initialValues?.date]);
 
   // Display the DateTimePicker when TextInput is focused
   const handleOpenPicker = () => {
