@@ -154,6 +154,8 @@ export default function AddActivity({route}) {
         />
       )}
       {/* DateTimePicker (hidden by default) */}
+
+      </View>
       {
         isEditMode && initialValues?.isSpecialActivity && (
           <View style={styles.checkboxContainer}>
@@ -166,21 +168,24 @@ export default function AddActivity({route}) {
           </View>
         )
       }
-      <View style={styles.buttonContainer}>
-        <PressableButton
-          onPressFunction={() => navigation.goBack()}
-          customStyle={styles.pressableButton} 
-        >
-          <Text style={styles.cancelButtonText}>Cancel</Text>
-        </PressableButton>
-        <PressableButton
-          onPressFunction={isEditMode ? showUpdateConfirmation : handleAddActivity}
-          customStyle={styles.pressableButton} 
-        >
-          <Text style={styles.saveButtonText}>Save</Text>
-        </PressableButton>
-      </View>
-      </View>
+      {
+        !isPickerShow && ( // Only render the button container if isPickerShow is false
+          <View style={styles.buttonContainer}>
+            <PressableButton
+              onPressFunction={() => navigation.goBack()}
+              customStyle={styles.cancelButton} 
+            >
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </PressableButton>
+            <PressableButton
+              onPressFunction={isEditMode ? showUpdateConfirmation : handleAddActivity}
+              customStyle={styles.saveButton} 
+            >
+              <Text style={styles.saveButtonText}>Save</Text>
+            </PressableButton>
+          </View>  
+        )
+      }
     </SafeAreaView>
   );
 }
@@ -193,7 +198,9 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-Start',
+    marginTop:50,
+    padding:10,
   },
   label: {
     color: colors.darkPurple,
@@ -214,7 +221,7 @@ const styles = StyleSheet.create({
   dropdown: {
     backgroundColor: colors.lightPurple,
     borderRadius: 5,
-    padding: 10,
+    //padding: 5,
     marginBottom: 5,
     borderColor: colors.darkPurple,
     elevation: 20,
@@ -260,27 +267,37 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   checkboxContainer:{
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding:10,
   },
-  pressableButton: {
+  cancelButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 10,
+    backgroundColor:colors.red,
+  },
+  saveButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    backgroundColor:colors.darkPurple,
   },
   saveButtonText: {
-    color: colors.darkPurple, 
+    color: colors.white, 
     fontSize: 16,
   },
   cancelButtonText:{
-    color: colors.red, 
-    fontSize: 16,
-  }
+    color: colors.white, 
+    fontSize: 16, 
+  },
 });
