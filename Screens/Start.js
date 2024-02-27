@@ -77,7 +77,6 @@ export default function Start() {
       {/* Phone Number Input */}
       <Text style={styles.text}>Phone Number</Text>
       <TextInput 
-        placeholder="Phone Number"
         style={styles.input} 
         value={phoneNumber} 
         keyboardType="numeric"

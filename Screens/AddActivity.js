@@ -16,7 +16,7 @@ export default function AddActivity({route}) {
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
   const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
-  const [isSelected, setSelection] = useState(initialValues?.isSpecialActivity || false);
+  const [isSelected, setSelection] = useState(!initialValues?.isSpecialActivity || false);
   const [open, setOpen] = useState(false); // Control dropdown open state
   const [items, setItems] = useState([ // Dropdown items
     { label: 'Walking', value: 'Walking' },
@@ -45,15 +45,12 @@ export default function AddActivity({route}) {
 
   // Display the DateTimePicker when TextInput is focused
   const handleOpenPicker = () => {
-    console.log("hit!");
-    if (!date) setDate(new Date()); // Set an initial date if none is selected
-    
+    if (!date) setDate(new Date()); // Set an initial date if none is selected 
     setIsPickerShow(true);
   };
 
   // Update the date and hide the picker after selection
   const handleChange = (event, selectedDate) => {
-    console.log("hit!");
     const currentDate = selectedDate || date;
     setDate(currentDate); // Update the date
     setFormattedDate(currentDate.toDateString()); // Format and update the date string
@@ -101,11 +98,9 @@ export default function AddActivity({route}) {
       if (isEditMode) {
         // Update existing activity
         await updateInDB(route.params.data.id, newActivity);
-        Alert.alert("Success", "Activity updated successfully.");
       } else {
         // Add new activity
         await writeToDB(newActivity);
-        Alert.alert("Success", "Activity added successfully.");
       }
       navigation.goBack();
     } catch (error) {

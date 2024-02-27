@@ -9,6 +9,7 @@ export default function PressableButton({
   return (
     <Pressable
       onPress={onPressFunction}
+      android_ripple={{ color: 'rgba(0, 0, 0, 0.2)' }}
       style={({ pressed }) => [
         styles.defaultStyle,
         customStyle,

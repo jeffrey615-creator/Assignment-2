@@ -13,9 +13,8 @@ export default function EditActivity() {
   const activityData = route.params?.data;
 
   const showDeleteConfirmation = () => {
-    console.log("delete hit");
     Alert.alert(
-      "Delete Activity", 
+      "Delete", 
       "Are you sure you want to delete this activity?", 
       [
         {
@@ -32,10 +31,8 @@ export default function EditActivity() {
   const handleDelete = async () => {
     try {
       await deleteFromDB(activityData.id);
-      Alert.alert("Activity Deleted", "The activity has been successfully deleted.");
       navigation.goBack();
     } catch (error) {
-      Alert.alert("Error", "There was an issue deleting the activity.");
       console.error(error);
     }
   };

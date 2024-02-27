@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#5611A1",
     marginTop: 15,
     padding: 10,
-    alignSelf: "stretch", // Center the component
+    alignSelf: "stretch", 
   },
   detailRow: {
     flexDirection: 'row', 
-    justifyContent: 'space-between', // Adjusted for better spacing
+    justifyContent: 'space-between', 
     alignItems: 'center', 
     flex: 1,
   },
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
   specialIcon: {
     fontWeight: "bold",
     fontSize: 20,
-    marginRight: 4, // Add some space between the icon and the date
+    marginRight: 4, 
   },
 });
