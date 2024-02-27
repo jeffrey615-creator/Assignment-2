@@ -8,14 +8,11 @@ import { colors } from '../Color';
 import { writeToDB, updateInDB } from '../firebase-files/firestoreHelper';
 import Checkbox from 'expo-checkbox';
 import PressableButton from '../components/PressableButton';
+import CustomTextInput from '../components/CustomTextInput';
 
 export default function AddActivity({route}) {
   const initialValues = route.params?.initialValues;
   const isEditMode = !!route.params?.initialValues;   
-  console.log(initialValues);
-  console.log(date);
-  console.log(formattedDate);
-
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
   const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
@@ -48,12 +45,15 @@ export default function AddActivity({route}) {
 
   // Display the DateTimePicker when TextInput is focused
   const handleOpenPicker = () => {
+    console.log("hit!");
     if (!date) setDate(new Date()); // Set an initial date if none is selected
+    
     setIsPickerShow(true);
   };
 
   // Update the date and hide the picker after selection
   const handleChange = (event, selectedDate) => {
+    console.log("hit!");
     const currentDate = selectedDate || date;
     setDate(currentDate); // Update the date
     setFormattedDate(currentDate.toDateString()); // Format and update the date string
@@ -147,12 +147,13 @@ export default function AddActivity({route}) {
       />
       {/* Date Input */}
       <Text style={styles.label}>Date *</Text>
-      <TextInput
+      <CustomTextInput
         placeholder="Tap here to pick a date"
         style={styles.textInput}
         value={formattedDate}
-        editable={false} 
-        onTouchStart={handleOpenPicker} 
+        //editable={false} 
+        onFocus={handleOpenPicker} 
+        zIndex={2000}
       />
       {/* DateTimePicker (hidden by default) */}
       {isPickerShow && date && (
@@ -163,6 +164,8 @@ export default function AddActivity({route}) {
           is24Hour={true}
           display="inline"  
           onChange={handleChange}
+          zIndex={2000}
+          style={styles.datePicker}
         />
       )}
       {/* DateTimePicker (hidden by default) */}
