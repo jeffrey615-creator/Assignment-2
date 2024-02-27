@@ -10,6 +10,9 @@ import { ActivitiesProvider } from './ActivityContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { colors } from './Color';
+import EditActivity from './components/EditActivity';
+import PressableButton from './components/PressableButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 const Stack = createNativeStackNavigator();
@@ -49,11 +52,11 @@ function Home({}) {
 // Function to set global screen options (e.g., header button)
 const globalScreenOptions = (navigation) => ({
   headerRight: () => (
-    <Button
-      onPress={() => navigation.navigate('AddActivity')}
-      title="Add"
-      color= {colors.yellow}
-    />
+    <PressableButton
+      onPressFunction={() => navigation.navigate('AddActivity')}
+      customStyle={{ marginRight: 10 }}>
+      <Icon name="add" size={24} color="white" backgroundColor={colors.darkPurple} />
+    </PressableButton>
   ),
 });
 
@@ -66,6 +69,19 @@ export default function App() {
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
           {/* Home screen with tab navigation */}
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          {/* Edit screen with tab navigation */}
+          <Stack.Screen
+          options={({ route }) => {
+            return {
+              headerTitle: route.params ? route.params.data.text : "Edit",
+              headerStyle: { backgroundColor: colors.darkPurple },
+              headerTintColor: colors.white,
+              headerTitleStyle: { fontWeight: 'bold' },
+            };
+          }}
+          name="Edit"
+          component={EditActivity}
+        />
           {/* AddActivity screen */}
           <Stack.Screen name="AddActivity" component={AddActivity} options={{ 
             headerTitle: "Add An Activity", 

@@ -8,13 +8,16 @@ export function useActivities() {
 
 export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([]);
+  const updateActivities = (newActivities) => {
+    setActivities(newActivities);
+  };
 
   const addActivity = (activity) => {
     setActivities((currentActivities) => [...currentActivities, activity]);
   };
 
   return (
-    <ActivitiesContext.Provider value={{ activities, addActivity }}>
+    <ActivitiesContext.Provider value={{ activities, addActivity, updateActivities}}>
       {children}
     </ActivitiesContext.Provider>
   );

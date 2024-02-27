@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
-import { Modal, Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Platform, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, SafeAreaView, StyleSheet, TextInput, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useActivities } from '../ActivityContext';
 import DropDownPicker from 'react-native-dropdown-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors } from '../Color';
+import { writeToDB, updateInDB } from '../firebase-files/firestoreHelper';
+import Checkbox from 'expo-checkbox';
+import PressableButton from '../components/PressableButton';
+import CustomTextInput from '../components/CustomTextInput';
 
-export default function AddActivity() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [activityType, setActivityType] = useState(null);
-  const [duration, setDuration] = useState('');
-  const [date, setDate] = useState(new Date());
+export default function AddActivity({route}) {
+  const initialValues = route.params?.initialValues;
+  const isEditMode = !!route.params?.initialValues;   
+  const [activityType, setActivityType] = useState(initialValues?.type || null);
+  const [duration, setDuration] = useState(initialValues?.duration || '');
+  const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
+  const [isSelected, setSelection] = useState(!initialValues?.isSpecialActivity || false);
   const [open, setOpen] = useState(false); // Control dropdown open state
   const [items, setItems] = useState([ // Dropdown items
     { label: 'Walking', value: 'Walking' },
@@ -22,14 +28,25 @@ export default function AddActivity() {
     { label: 'Hiking', value: 'Hiking' },
   ]);
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [formattedDate, setFormattedDate] = useState(date.toDateString()); 
+  const [formattedDate, setFormattedDate] = useState(''); 
 
   const { addActivity } = useActivities();
   const navigation = useNavigation();
 
+  useEffect(() => {
+    if (initialValues?.date) {
+      const initialDate = new Date(initialValues.date);
+      setDate(initialDate);
+      setFormattedDate(initialDate.toDateString()); // Format the date to a readable string
+    } else {
+      setFormattedDate(''); // Reset or set to current date if you prefer
+    }
+  }, [initialValues?.date]);
+
   // Display the DateTimePicker when TextInput is focused
-  const handleFocus = () => {
-    setIsPickerShow(true); 
+  const handleOpenPicker = () => {
+    if (!date) setDate(new Date()); // Set an initial date if none is selected 
+    setIsPickerShow(true);
   };
 
   // Update the date and hide the picker after selection
@@ -37,33 +54,61 @@ export default function AddActivity() {
     const currentDate = selectedDate || date;
     setDate(currentDate); // Update the date
     setFormattedDate(currentDate.toDateString()); // Format and update the date string
-    setIsPickerShow(false); // Optionally hide the picker after selection
+    setIsPickerShow(false); // Hide the picker after selection
+  };
+
+  // Shows a alert before updating an activity
+  const showUpdateConfirmation = () => {
+    Alert.alert(
+      "Important", 
+      "Are you sure you want to save these change?", 
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => handleAddActivity() }
+      ],
+      { cancelable: false }
+    );
   };
 
   // Function to add activity
-  const handleAddActivity = () => {
+  const handleAddActivity = async () => {
     if (!activityType || duration <= 0 || isNaN(duration)) {
       Alert.alert("Invalid input", "Please ensure all fields are filled out correctly, and duration is a positive number.");
       return;
     }
 
   // Function to check if the activity is special (e.g., Running or Weights for more than 60 minutes)
-  function checkSpecialActivity(activityType, duration) {
+    function checkSpecialActivity(activityType, duration) {
       return (activityType === 'Running' || activityType === 'Weights') && duration > 60;
     }
 
+    const isSpecialActivity = checkSpecialActivity(activityType, Number(duration));
+
     // Create a new activity object
     const newActivity = {
-      id: Math.random(),
       type: activityType,
       duration: Number(duration), // Ensure duration is stored as a number
       date: formattedDate, // Store date in ISO format
-      isSpecialActivity: checkSpecialActivity(activityType, duration),
+      isSpecialActivity: (isEditMode && isSpecialActivity) ? isSelected : isSpecialActivity,
     };
 
-    // Add the new activity and navigate back
-    addActivity(newActivity);
-    navigation.goBack(); 
+    try {
+      if (isEditMode) {
+        // Update existing activity
+        await updateInDB(route.params.data.id, newActivity);
+      } else {
+        // Add new activity
+        await writeToDB(newActivity);
+      }
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert("Error", "An error occurred while processing your request.");
+      console.error(error);
+    }
   };
 
   return (
@@ -90,8 +135,8 @@ export default function AddActivity() {
       {/* Duration Input */}
       <Text style={styles.label}>Duration (min) *</Text>
       <TextInput
-        value={duration}
-        onChangeText={setDuration}
+        value={duration.toString()}
+        onChangeText={text => setDuration(text)}
         keyboardType="numeric"
         placeholder="Duration in minutes"
         style={styles.duration}
@@ -99,40 +144,60 @@ export default function AddActivity() {
       />
       {/* Date Input */}
       <Text style={styles.label}>Date *</Text>
-      <TextInput
+      <CustomTextInput
         placeholder="Tap here to pick a date"
-        onFocus={handleFocus} 
         style={styles.textInput}
         value={formattedDate}
+        //editable={false} 
+        onFocus={handleOpenPicker} 
         zIndex={2000}
       />
       {/* DateTimePicker (hidden by default) */}
-      {isPickerShow && (
+      {isPickerShow && date && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
           mode="date"
           is24Hour={true}
-          display="inline" 
+          display="inline"  
           onChange={handleChange}
-          style={styles.datePicker}
           zIndex={2000}
+          style={styles.datePicker}
         />
       )}
       {/* DateTimePicker (hidden by default) */}
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Cancel"
-          onPress={() => navigation.goBack()}
-          color={colors.red}
-        />
-        <Button
-          title="Save"
-          onPress={handleAddActivity}
-          color={colors.darkPurple}
-        />
+
       </View>
-      </View>
+      {
+        isEditMode && initialValues?.isSpecialActivity && (
+          <View style={styles.checkboxContainer}>
+            <Text style={styles.label}>This item is marked as special. Select the checkbox if you would like to approve it</Text>
+            <Checkbox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
+            />
+          </View>
+        )
+      }
+      {
+        !isPickerShow && ( // Only render the button container if isPickerShow is false
+          <View style={styles.buttonContainer}>
+            <PressableButton
+              onPressFunction={() => navigation.goBack()}
+              customStyle={styles.cancelButton} 
+            >
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </PressableButton>
+            <PressableButton
+              onPressFunction={isEditMode ? showUpdateConfirmation : handleAddActivity}
+              customStyle={styles.saveButton} 
+            >
+              <Text style={styles.saveButtonText}>Save</Text>
+            </PressableButton>
+          </View>  
+        )
+      }
     </SafeAreaView>
   );
 }
@@ -145,7 +210,9 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-Start',
+    marginTop:50,
+    padding:10,
   },
   label: {
     color: colors.darkPurple,
@@ -166,7 +233,7 @@ const styles = StyleSheet.create({
   dropdown: {
     backgroundColor: colors.lightPurple,
     borderRadius: 5,
-    padding: 10,
+    //padding: 5,
     marginBottom: 5,
     borderColor: colors.darkPurple,
     elevation: 20,
@@ -212,6 +279,37 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 20,
+    paddingBottom: 80,
+  },
+  checkboxContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding:10,
+  },
+  cancelButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    backgroundColor:colors.red,
+  },
+  saveButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    backgroundColor:colors.darkPurple,
+  },
+  saveButtonText: {
+    color: colors.white, 
+    fontSize: 16,
+  },
+  cancelButtonText:{
+    color: colors.white, 
+    fontSize: 16, 
   },
 });

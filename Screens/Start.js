@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../Color';
+import PressableButton from '../components/PressableButton';
 
 
 export default function Start() {
@@ -63,43 +64,44 @@ export default function Start() {
   }
 
   return (
-      <SafeAreaView style={styles.container}>
-        {/* Email Input */}
+    <SafeAreaView style={styles.container}>
+      {/* Email Input */}
+      <Text style={styles.text}>Email Address</Text>
+      <TextInput 
+        style={styles.input} 
+        value={email} 
+        onChangeText={changeEmailHandler}
+      />
+      {emailError ? <Text>{emailError}</Text> : null}
 
-        <Text style={styles.text}>Email Address</Text>
-        <TextInput 
-          style={styles.input} 
-          value={email} 
-          onChangeText={changeEmailHandler}
-        />
-        {emailError ? <Text>{emailError}</Text> : null}
-
-        {/* Phone Number Input */}
-        <Text style={styles.text}>Phone Number</Text>
-        <TextInput 
-          placeholder="Phone Number"
-          style={styles.input} 
-          value={phoneNumber} 
-          keyboardType="numeric"
-          onChangeText={changePhoneNumberHandler}
-        />
-        {phoneNumberError ? <Text>{phoneNumberError}</Text> : null}
-        <View style={styles.buttonsContainer}>
+      {/* Phone Number Input */}
+      <Text style={styles.text}>Phone Number</Text>
+      <TextInput 
+        style={styles.input} 
+        value={phoneNumber} 
+        keyboardType="numeric"
+        onChangeText={changePhoneNumberHandler}
+      />
+      {phoneNumberError ? <Text>{phoneNumberError}</Text> : null}
+      
+      <View style={styles.buttonsContainer}>
         {/* Reset Button */}
-        <TouchableOpacity 
-          onPress={cancelHandler} 
-          style={[styles.button, styles.resetButton]}
+        <PressableButton 
+          onPressFunction={cancelHandler} 
+          customStyle={[styles.button, styles.resetButton]}
         >
           <Text style={styles.resetText}>Reset</Text>
-        </TouchableOpacity>
+        </PressableButton>
+        
         {/* Start Button */}
-        <TouchableOpacity 
-          onPress={confirmHandler} 
-          style={styles.button}
+        <PressableButton 
+          onPressFunction={confirmHandler} 
+          customStyle={styles.button}
+          customDisabledStyle={isButtonDisabled ? styles.disabledButton : {}}
           disabled={isButtonDisabled}
         >
           <Text style={[styles.buttonText, isButtonDisabled ? styles.disabledText : styles.enabledText]}>Start</Text>
-        </TouchableOpacity>
+        </PressableButton>
       </View>
     </SafeAreaView>
   );
