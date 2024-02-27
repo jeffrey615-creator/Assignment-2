@@ -13,6 +13,8 @@ import CustomTextInput from '../components/CustomTextInput';
 export default function AddActivity({route}) {
   const initialValues = route.params?.initialValues;
   const isEditMode = !!route.params?.initialValues;   
+  console.log("edit mode");
+  console.log("checkbox", isSelected);
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
   const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
@@ -82,7 +84,7 @@ export default function AddActivity({route}) {
     }
 
   // Function to check if the activity is special (e.g., Running or Weights for more than 60 minutes)
-  function checkSpecialActivity(activityType, duration) {
+    function checkSpecialActivity(activityType, duration) {
       return (activityType === 'Running' || activityType === 'Weights') && duration > 60;
     }
 
@@ -93,7 +95,7 @@ export default function AddActivity({route}) {
       type: activityType,
       duration: Number(duration), // Ensure duration is stored as a number
       date: formattedDate, // Store date in ISO format
-      isSpecialActivity: isEditMode ? isSelected : isSpecialActivity,
+      isSpecialActivity: (isEditMode && isSpecialActivity) ? isSelected : isSpecialActivity,
     };
 
     try {
