@@ -57,6 +57,7 @@ export default function AddActivity({route}) {
     setIsPickerShow(false); // Hide the picker after selection
   };
 
+  // Shows a alert before updating an activity
   const showUpdateConfirmation = () => {
     Alert.alert(
       "Important", 
@@ -72,6 +73,7 @@ export default function AddActivity({route}) {
       { cancelable: false }
     );
   };
+
   // Function to add activity
   const handleAddActivity = async () => {
     if (!activityType || duration <= 0 || isNaN(duration)) {

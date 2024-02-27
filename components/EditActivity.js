@@ -10,8 +10,9 @@ import { colors } from '../Color';
 export default function EditActivity() {
   const navigation = useNavigation();
   const route = useRoute();
-  const activityData = route.params?.data;
+  const activityData = route.params?.data; // Extracting activity data passed through route parameters
 
+  // Shows a confirmation dialog before deleting an activity
   const showDeleteConfirmation = () => {
     Alert.alert(
       "Delete", 
@@ -28,6 +29,7 @@ export default function EditActivity() {
     );
   };
 
+  // Handles the deletion of an activity
   const handleDelete = async () => {
     try {
       await deleteFromDB(activityData.id);
@@ -37,10 +39,12 @@ export default function EditActivity() {
     }
   };
 
+  // Use layout effect to customize the navigation header on this screen
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <PressableButton onPressFunction={showDeleteConfirmation} title="Delete" color="red">
+        // Display a custom PressableButton in the header for deleting the activity
+        <PressableButton onPressFunction={showDeleteConfirmation} title="Delete">
             <Icon name="delete" size={24} color="white" backgroundColor={colors.darkPurple} />
         </PressableButton> 
       ),

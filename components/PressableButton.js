@@ -9,7 +9,7 @@ export default function PressableButton({
   return (
     <Pressable
       onPress={onPressFunction}
-      android_ripple={{ color: 'rgba(0, 0, 0, 0.2)' }}
+      android_ripple={{ color: 'rgba(0, 0, 0, 0.2)' }} // Adds a ripple effect on Android devices for visual feedback
       style={({ pressed }) => [
         styles.defaultStyle,
         customStyle,

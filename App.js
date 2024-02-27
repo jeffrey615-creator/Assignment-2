@@ -69,6 +69,7 @@ export default function App() {
           <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
           {/* Home screen with tab navigation */}
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          {/* Edit screen with tab navigation */}
           <Stack.Screen
           options={({ route }) => {
             return {
