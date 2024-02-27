@@ -13,8 +13,6 @@ import CustomTextInput from '../components/CustomTextInput';
 export default function AddActivity({route}) {
   const initialValues = route.params?.initialValues;
   const isEditMode = !!route.params?.initialValues;   
-  console.log("edit mode");
-  console.log("checkbox", isSelected);
   const [activityType, setActivityType] = useState(initialValues?.type || null);
   const [duration, setDuration] = useState(initialValues?.duration || '');
   const [date, setDate] = useState(initialValues?.date ? new Date(initialValues.date) : new Date());
